@@ -1,0 +1,37 @@
+# Environment files
+.env
+
+# Environment-specific configuration files
+*.env
+
+# IDE and editor configuration files
+.vscode/
+.idea/
+*.swp
+
+# Cache and temporary files
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.log
+*.pot
+
+# Dependency directories
+venv/
+env/
+.env/
+.venv/
+
+# Virtual environment configuration files
+pip-wheel-metadata/
+Pipfile.lock
+
+# Test and coverage files
+.coverage
+nosetests.xml
+coverage.xml
+
+# Pip dependency and cache files
+pip-log.txt
+pip-delete-this-directory.txt
