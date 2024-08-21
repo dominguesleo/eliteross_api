@@ -35,3 +35,7 @@ coverage.xml
 # Pip dependency and cache files
 pip-log.txt
 pip-delete-this-directory.txt
+
+# Django migration files
+**/migrations/*
+!**/migrations/__init__.py
