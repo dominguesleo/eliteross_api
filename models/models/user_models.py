@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.postgres.fields import ArrayField
 from django.core.validators import MinValueValidator, MaxValueValidator
 from datetime import date
 
@@ -53,43 +52,42 @@ FLEXIBILITY_CHOICES = [
 class Client(models.Model):
 
     # Personal Information
-    name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    date_of_birth = models.DateField()
-    phone = models.CharField(max_length=20, null=True, blank=True)
-    email = models.EmailField(null=True, blank=True)
-    gender = models.CharField(max_length=20, choices=GENDER_CHOICES)
-    address = models.CharField(max_length=200, null=True, blank=True)
-    profession = models.CharField(max_length=100, null=True, blank=True)
-    physical_activity_at_work = models.CharField(max_length=100, null=True, blank=True, choices=PHYSICAL_ACTIVITY_CHOICES, default=None)
-    fitness_goal = models.CharField(max_length=100, null=True, blank=True)
+    name = models.CharField(max_length=100, verbose_name="Nombre")
+    last_name = models.CharField(max_length=100, verbose_name="Apellido")
+    date_of_birth = models.DateField(verbose_name="Fecha de nacimiento")
+    phone = models.CharField(max_length=20, null=True, blank=True, verbose_name="Teléfono")
+    email = models.EmailField(null=True, blank=True, verbose_name="Correo electrónico")
+    gender = models.CharField(max_length=20, choices=GENDER_CHOICES, verbose_name="Género")
+    height = models.FloatField(null=True, blank=True, verbose_name="Altura")
+    address = models.CharField(max_length=200, null=True, blank=True, verbose_name="Dirección")
+    profession = models.CharField(max_length=100, null=True, blank=True, verbose_name="Profesión")
+    physical_activity_at_work = models.CharField(max_length=100, null=True, blank=True, choices=PHYSICAL_ACTIVITY_CHOICES, default=None, verbose_name="Actividad física en el trabajo")
+    fitness_goal = models.CharField(max_length=100, null=True, blank=True, verbose_name="Objetivo de fitness")
 
     # Health Information
-    is_smoker = models.BooleanField(null=True)
-    cigarette_per_day =  models.CharField(max_length=100, null=True, blank=True, choices=CIGARETTE_CHOICES, default=None)
-    is_diabetic = models.BooleanField(null=True)
-    diabetic_type = models.CharField(max_length=100, null=True, blank=True, choices=DIABETIC_CHOICES, default=None)
-    cholesterol = models.FloatField(null=True, blank=True)
-    blood_pressure = models.FloatField(null=True, blank=True)
-    heart_rate = models.FloatField(null=True, blank=True)
+    is_smoker = models.BooleanField(null=True, verbose_name="¿Fumador?")
+    cigarette_per_day = models.CharField(max_length=100, null=True, blank=True, choices=CIGARETTE_CHOICES, default=None, verbose_name="Cigarrillos por día")
+    cholesterol = models.FloatField(null=True, blank=True, verbose_name="Colesterol")
+    blood_pressure = models.FloatField(null=True, blank=True, verbose_name="Presión arterial")
+    heart_rate = models.FloatField(null=True, blank=True, verbose_name="Frecuencia cardíaca")
 
     # Sports, rest, and nutrition
-    is_physically_active = models.BooleanField(null=True)
-    physical_inactivity_per_month = models.IntegerField(validators=[MinValueValidator(1)], null=True, blank=True)
-    days_available_for_training = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(7)], null=True, blank=True)
-    hours_of_sleep = models.CharField(max_length=100, null=True, blank=True, choices=SLEEP_CHOICES, default=None)
+    is_physically_active = models.BooleanField(null=True, verbose_name="¿Activo físicamente?")
+    physical_inactivity_per_month = models.IntegerField(validators=[MinValueValidator(1)], null=True, blank=True, verbose_name="Inactividad física por mes")
+    days_available_for_training = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(7)], null=True, blank=True, verbose_name="Días disponibles para entrenar")
+    hours_of_sleep = models.CharField(max_length=100, null=True, blank=True, choices=SLEEP_CHOICES, default=None, verbose_name="Horas de sueño")
 
     # Tests and measurements
-    biotype = models.CharField(max_length=100, null=True, blank=True)
-    shoulder_flexibility = models.FloatField(null=True, blank=True)
-    hip_flexibility = models.FloatField(null=True, blank=True, choices=FLEXIBILITY_CHOICES, default=None)
-    knee_flexibility = models.FloatField(null=True, blank=True, choices=FLEXIBILITY_CHOICES, default=None)
-    ankle_flexibility = models.FloatField(null=True, blank=True, choices=FLEXIBILITY_CHOICES, default=None)
+    biotype = models.CharField(max_length=100, null=True, blank=True, verbose_name="Biotipo")
+    shoulder_flexibility = models.CharField(null=True, blank=True, verbose_name="Flexibilidad de hombros")
+    hip_flexibility = models.CharField(null=True, blank=True, choices=FLEXIBILITY_CHOICES, default=None, verbose_name="Flexibilidad de cadera")
+    knee_flexibility = models.CharField(null=True, blank=True, choices=FLEXIBILITY_CHOICES, default=None, verbose_name="Flexibilidad de rodilla")
+    ankle_flexibility = models.CharField(null=True, blank=True, choices=FLEXIBILITY_CHOICES, default=None, verbose_name="Flexibilidad de tobillo")
 
     # Admin Information
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Fecha de actualización")
+    is_active = models.BooleanField(default=True, verbose_name="Activo")
 
     @property
     def age(self):
@@ -97,105 +95,126 @@ class Client(models.Model):
         return today.year - self.date_of_birth.year - (
             (today.month, today.day) < (self.date_of_birth.month, self.date_of_birth.day)
         )
+
     def __str__(self):
         return f'{self.name} {self.last_name}'
+
+    class Meta:
+        verbose_name = "Cliente"
+        verbose_name_plural = "Clientes"
 
 
 #* Health Information relationships
 
 class AlteredAnalyticalData(models.Model):
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='altered_analytical_data')
-    name = models.CharField(max_length=100)
-    reason = models.TextField(null=True, blank=True)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='altered_analytical_data', verbose_name="Cliente")
+    name = models.CharField(max_length=100, verbose_name="Nombre")
+    details = models.TextField(null=True, blank=True, verbose_name="Detalles")
+
     def __str__(self):
         return f"{self.client.name} {self.client.last_name} - {self.name}"
+
+    class Meta:
+        verbose_name = "Dato Analítico Alterado"
+        verbose_name_plural = "Datos Analíticos Alterados"
 
 class Disease(models.Model):
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='disease')
-    name = models.CharField(max_length=100)
-    details = models.TextField(null=True, blank=True)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='disease', verbose_name="Cliente")
+    name = models.CharField(max_length=100, verbose_name="Nombre")
+    details = models.TextField(null=True, blank=True, verbose_name="Detalles")
+
     def __str__(self):
         return f"{self.client.name} {self.client.last_name} - {self.name}"
+
+    class Meta:
+        verbose_name = "Enfermedad"
+        verbose_name_plural = "Enfermedades"
 
 class Surgery(models.Model):
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='surgery')
-    name = models.CharField(max_length=100)
-    details = models.TextField(null=True, blank=True)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='surgery', verbose_name="Cliente")
+    name = models.CharField(max_length=100, verbose_name="Nombre")
+    details = models.TextField(null=True, blank=True, verbose_name="Detalles")
+
     def __str__(self):
         return f"{self.client.name} {self.client.last_name} - {self.name}"
+
+    class Meta:
+        verbose_name = "Cirugía"
+        verbose_name_plural = "Cirugías"
 
 class Injury(models.Model):
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='injury')
-    name = models.CharField(max_length=100)
-    details = models.TextField(null=True, blank=True)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='injury', verbose_name="Cliente")
+    name = models.CharField(max_length=100, verbose_name="Nombre")
+    details = models.TextField(null=True, blank=True, verbose_name="Detalles")
+
     def __str__(self):
         return f"{self.client.name} {self.client.last_name} - {self.name}"
+
+    class Meta:
+        verbose_name = "Lesión"
+        verbose_name_plural = "Lesiones"
 
 class ContraindicatedPhysicalActivity(models.Model):
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='contraindicated_physical_activity')
-    name = models.CharField(max_length=100)
-    details = models.TextField(null=True, blank=True)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='contraindicated_physical_activity', verbose_name="Cliente")
+    name = models.CharField(max_length=100, verbose_name="Nombre")
+    details = models.TextField(null=True, blank=True, verbose_name="Detalles")
+
     def __str__(self):
         return f"{self.client.name} {self.client.last_name} - {self.name}"
 
+    class Meta:
+        verbose_name = "Actividad Física Contraindicada"
+        verbose_name_plural = "Actividades Físicas Contraindicadas"
 
-#* Sports, rest, and nutrition
+
+#* Sports, rest, and nutrition relationships
 
 class PhysicalActivity(models.Model):
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='physical_activity')
-    name = models.CharField(max_length=100)
-    per_week = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(7)], null=True, blank=True)
-    level = models.CharField(max_length=100, null=True, blank=True, choices=PHYSICAL_ACTIVITY_CHOICES, default=None)
-    details = models.TextField(null=True, blank=True)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='physical_activity', verbose_name="Cliente")
+    name = models.CharField(max_length=100, verbose_name="Nombre")
+    per_week = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(7)], null=True, blank=True, verbose_name="Por semana")
+    level = models.CharField(max_length=100, null=True, blank=True, choices=PHYSICAL_ACTIVITY_CHOICES, default=None, verbose_name="Nivel")
+    details = models.TextField(null=True, blank=True, verbose_name="Detalles")
+
     def __str__(self):
         return f"{self.client.name} {self.client.last_name} - {self.name}"
+
+    class Meta:
+        verbose_name = "Actividad Física"
+        verbose_name_plural = "Actividades Físicas"
 
 class DailyMeals(models.Model):
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='daily_meals')
-    name = models.CharField(max_length=100)
-    details = models.TextField(null=True, blank=True)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='daily_meals', verbose_name="Cliente")
+    name = models.CharField(max_length=100, verbose_name="Nombre")
+    details = models.TextField(null=True, blank=True, verbose_name="Detalles")
+
     def __str__(self):
         return f"{self.client.name} {self.client.last_name} - {self.name}"
+
+    class Meta:
+        verbose_name = "Comida Diaria"
+        verbose_name_plural = "Comidas Diarias"
 
 class AllergiesIntolerances(models.Model):
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='allergies_intolerances')
-    name = models.CharField(max_length=100)
-    details = models.TextField(null=True, blank=True)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='allergies_intolerances', verbose_name="Cliente")
+    name = models.CharField(max_length=100, verbose_name="Nombre")
+    details = models.TextField(null=True, blank=True, verbose_name="Detalles")
+
     def __str__(self):
         return f"{self.client.name} {self.client.last_name} - {self.name}"
 
+    class Meta:
+        verbose_name = "Alergia o Intolerancia"
+        verbose_name_plural = "Alergias e Intolerancias"
 
-#* Tests and measurements
+class Supplements(models.Model):
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='supplements', verbose_name="Cliente")
+    name = models.CharField(max_length=100, verbose_name="Nombre")
+    details = models.TextField(null=True, blank=True, verbose_name="Detalles")
 
-class WeightRecord(models.Model):
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='weight_records')
-    weight = models.FloatField()
-    recorded_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
-        return f"{self.client.name} {self.client.last_name} - {self.weight} kg at {self.recorded_at}"
+        return f"{self.client.name} {self.client.last_name} - {self.name}"
 
-class HeightRecord(models.Model):
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='height_records')
-    height = models.FloatField()
-    recorded_at = models.DateTimeField(auto_now_add=True)
-    def __str__(self):
-        return f"{self.client.name} {self.client.last_name} - {self.height} cm at {self.recorded_at}"
-
-class WaistRecord(models.Model):
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='waist_records')
-    waist = models.FloatField()
-    recorded_at = models.DateTimeField(auto_now_add=True)
-    def __str__(self):
-        return f"{self.client.name} {self.client.last_name} - {self.waist} cm at {self.recorded_at}"
-
-
-
-
-
-
-
-
-
-
-
-
+    class Meta:
+        verbose_name = "Suplemento"
+        verbose_name_plural = "Suplementos"
