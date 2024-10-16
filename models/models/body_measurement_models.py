@@ -3,9 +3,10 @@ from models.models.user_models import Client
 
 class BodyMeasurement(models.Model):
 
-# General
+    # General
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='body_measurement', verbose_name="Cliente")
     date = models.DateField(verbose_name="Fecha")
+    weight = models.FloatField(null=True,blank=True, default=None, verbose_name="Peso")
 
     # Circunferences
     chest_circ = models.FloatField(null=True, blank=True, verbose_name="Circunferencia del pecho")
@@ -31,6 +32,16 @@ class BodyMeasurement(models.Model):
     abdomen_skf = models.FloatField(null=True, blank=True, verbose_name="Pliegue cutáneo del abdomen")
     thigh_skf = models.FloatField(null=True, blank=True, verbose_name="Pliegue cutáneo del muslo")
     calf_skf = models.FloatField(null=True, blank=True, verbose_name="Pliegue cutáneo de la pantorrilla")
+
+    # IMC
+    pollock_3 = models.FloatField(null=True, blank=True,default=None, verbose_name="IMC (Pollock 3 pliegues)")
+    pollock_7 = models.FloatField(null=True, blank=True,default=None, verbose_name="IMC (Pollock 7 pliegues)")
+    petroski_4 = models.FloatField(null=True, blank=True,default=None, verbose_name="IMC (Petroski 4 pliegues)")
+    faulkner_4 = models.FloatField(null=True, blank=True,default=None, verbose_name="IMC (Faulkner 4 pliegues)")
+    sloan_2 = models.FloatField(null=True, blank=True,default=None, verbose_name="IMC (Sloan 2 pliegues)")
+    guedes_3 = models.FloatField(null=True, blank=True,default=None, verbose_name="IMC (Guedes 3 pliegues)")
+    jackson_pollock = models.FloatField(null=True, blank=True,default=None, verbose_name="IMC (Jackson Pollock)")
+    weltman = models.FloatField(null=True, blank=True,default=None, verbose_name="IMC (Weltman)")
 
     class Meta:
         verbose_name = "Medición Corporal"
