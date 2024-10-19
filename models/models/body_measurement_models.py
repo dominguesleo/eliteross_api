@@ -33,15 +33,21 @@ class BodyMeasurement(models.Model):
     thigh_skf = models.FloatField(null=True, blank=True, verbose_name="Pliegue cutáneo del muslo")
     calf_skf = models.FloatField(null=True, blank=True, verbose_name="Pliegue cutáneo de la pantorrilla")
 
-    # IMC
-    pollock_3 = models.FloatField(null=True, blank=True,default=None, verbose_name="IMC (Pollock 3 pliegues)")
-    pollock_7 = models.FloatField(null=True, blank=True,default=None, verbose_name="IMC (Pollock 7 pliegues)")
-    petroski_4 = models.FloatField(null=True, blank=True,default=None, verbose_name="IMC (Petroski 4 pliegues)")
-    faulkner_4 = models.FloatField(null=True, blank=True,default=None, verbose_name="IMC (Faulkner 4 pliegues)")
-    sloan_2 = models.FloatField(null=True, blank=True,default=None, verbose_name="IMC (Sloan 2 pliegues)")
-    guedes_3 = models.FloatField(null=True, blank=True,default=None, verbose_name="IMC (Guedes 3 pliegues)")
-    jackson_pollock = models.FloatField(null=True, blank=True,default=None, verbose_name="IMC (Jackson Pollock)")
-    weltman = models.FloatField(null=True, blank=True,default=None, verbose_name="IMC (Weltman)")
+    # Calculated fields
+    central_adiposity_index = models.FloatField(null=True, blank=True, default=None, verbose_name="Índice de adiposidad central")
+    peripheral_adiposity_index = models.FloatField(null=True, blank=True, default=None, verbose_name="Índice de adiposidad periférica")
+    imc = models.FloatField(null=True, blank=True, default=None, verbose_name="IMC")
+    rcq = models.FloatField(null=True, blank=True, default=None, verbose_name="RCQ")
+    ic = models.FloatField(null=True, blank=True, default=None, verbose_name="IC")
+    waist_height_ratio = models.FloatField(null=True, blank=True, default=None, verbose_name="Relación cintura altura")
+    pollock_3 = models.FloatField(null=True, blank=True, default=None, verbose_name="Pollock 3")
+    pollock_7 = models.FloatField(null=True, blank=True, default=None, verbose_name="Pollock 7")
+    petroski = models.FloatField(null=True, blank=True, default=None, verbose_name="Petroski")
+    faulkner = models.FloatField(null=True, blank=True, default=None, verbose_name="Faulkner")
+    sloan = models.FloatField(null=True, blank=True, default=None, verbose_name="Sloan")
+    guedes = models.FloatField(null=True, blank=True, default=None, verbose_name="Guedes")
+    jackson_pollock = models.FloatField(null=True, blank=True, default=None, verbose_name="Jackson & Pollock")
+    weltman = models.FloatField(null=True, blank=True, default=None, verbose_name="Weltman")
 
     class Meta:
         verbose_name = "Medición Corporal"
