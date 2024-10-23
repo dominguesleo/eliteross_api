@@ -1,6 +1,12 @@
 import math
 
-#TODO: Preguntar si se guarda la densidad corporal o el porcentaje de grasa
+#TODO: Preguntar si se guarda la densidad corporal o el porcentaje de 
+
+def cm_to_inches(cm):
+    return cm / 2.54
+
+def kg_to_lbs(kg):
+    return kg * 2.20462
 
 def siri(body_density=None):
     if body_density:
@@ -131,3 +137,36 @@ def weltman(gender=None, abdomen_circ=None, weight=None, height=None):
     if gender == "Female" and abdomen_circ and weight and height:
         return (0.11077 * abdomen_circ) - (0.17666 * height * 100) + (0.187 * weight) + 51.03301
     return None
+
+def navy_body_fat(gender=None, height=None, waist_circ=None, neck_circ=None, hip_circ=None):
+    if not gender or not height:
+        return None
+    height = cm_to_inches(height)
+
+    if gender == "Male" and waist_circ and neck_circ:
+        waist_circ = cm_to_inches(waist_circ)
+        neck_circ = cm_to_inches(neck_circ)
+        return 86.010 * math.log10(waist_circ - neck_circ) - 70.041 * math.log10(height) + 36.76
+
+    if gender == "Female" and waist_circ and neck_circ and hip_circ:
+        waist_circ = cm_to_inches(waist_circ)
+        neck_circ = cm_to_inches(neck_circ)
+        hip_circ = cm_to_inches(hip_circ)
+        return 163.205 * math.log10(waist_circ + hip_circ - neck_circ) - 97.684 * math.log10(height) - 78.387
+
+    return None
+
+def ymca(gender=None, weight=None, waist_circ=None):
+    if not gender or not weight or not waist_circ:
+        return None
+    if gender == "Male" or gender == "Female":
+        return (4.15 * math.log10(cm_to_inches(waist_circ))) - (0.082 * math.log10(kg_to_lbs(weight))) - (98.42 if gender == "Male" else 76.76)
+    return None
+
+def deurenberg(gender=None, age=None, weight=None, height=None):
+    if not gender or not age or not weight or not height:
+        return None
+    if gender == "Male" or gender == "Female":
+        return (1.2 * imc(weight, height)) + (0.23 * age) - (10.8 * 1 if gender == "Male" else 0) - 5.4
+    return None
+

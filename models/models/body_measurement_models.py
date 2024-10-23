@@ -23,6 +23,7 @@ class BodyMeasurement(models.Model):
     left_calf_circ = models.FloatField(null=True, blank=True, verbose_name="Circunferencia de la pantorrilla izquierda")
 
     # Skinfolds
+    neck_circ = models.FloatField(null=True, blank=True, verbose_name="Pliegue cutáneo del cuello")
     chest_skf = models.FloatField(null=True, blank=True, verbose_name="Pliegue cutáneo del pecho")
     mid_axillary_skf = models.FloatField(null=True, blank=True, verbose_name="Pliegue cutáneo axilar medio")
     subscapular_skf = models.FloatField(null=True, blank=True, verbose_name="Pliegue cutáneo subescapular")
@@ -48,6 +49,9 @@ class BodyMeasurement(models.Model):
     guedes = models.FloatField(null=True, blank=True, default=None, verbose_name="Guedes")
     jackson_pollock = models.FloatField(null=True, blank=True, default=None, verbose_name="Jackson & Pollock")
     weltman = models.FloatField(null=True, blank=True, default=None, verbose_name="Weltman")
+    navy_body_fat = models.FloatField(null=True, blank=True, default=None, verbose_name="Formula marina EEUU")
+    ymca = models.FloatField(null=True, blank=True, default=None, verbose_name="YMCA")
+    deurenberg = models.FloatField(null=True, blank=True, default=None, verbose_name="Deurenberg")
 
     class Meta:
         verbose_name = "Medición Corporal"

@@ -53,7 +53,7 @@ class Client(models.Model):
 
     # Personal Information
     name = models.CharField(max_length=100, verbose_name="Nombre")
-    last_name = models.CharField(max_length=100, verbose_name="Apellido")
+    last_name = models.CharField(max_length=100, verbose_name="Apellidos")
     date_of_birth = models.DateField(verbose_name="Fecha de nacimiento")
     phone = models.CharField(max_length=20, null=True, blank=True, verbose_name="Teléfono")
     email = models.EmailField(null=True, blank=True, verbose_name="Correo electrónico")
@@ -65,21 +65,21 @@ class Client(models.Model):
     fitness_goal = models.CharField(max_length=100, null=True, blank=True, verbose_name="Objetivo de fitness")
 
     # Health Information
-    is_smoker = models.BooleanField(null=True, verbose_name="¿Fumador?")
+    is_smoker = models.BooleanField(null=True, default=None, verbose_name="¿Fumador?")
     cigarette_per_day = models.CharField(max_length=100, null=True, blank=True, choices=CIGARETTE_CHOICES, default=None, verbose_name="Cigarrillos por día")
     cholesterol = models.FloatField(null=True, blank=True, verbose_name="Colesterol")
     blood_pressure = models.FloatField(null=True, blank=True, verbose_name="Presión arterial")
     heart_rate = models.FloatField(null=True, blank=True, verbose_name="Frecuencia cardíaca")
 
     # Sports, rest, and nutrition
-    is_physically_active = models.BooleanField(null=True, verbose_name="¿Activo físicamente?")
-    physical_inactivity_per_month = models.IntegerField(validators=[MinValueValidator(1)], null=True, blank=True, verbose_name="Inactividad física por mes")
-    days_available_for_training = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(7)], null=True, blank=True, verbose_name="Días disponibles para entrenar")
+    is_physically_active = models.BooleanField(null=True, default=None, verbose_name="¿Activo físicamente?")
+    physical_inactivity_per_month = models.IntegerField(validators=[MinValueValidator(0)], null=True, blank=True, verbose_name="Inactividad física por mes")
+    days_available_for_training = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(7)], null=True, blank=True, verbose_name="Días disponibles para entrenar")
     hours_of_sleep = models.CharField(max_length=100, null=True, blank=True, choices=SLEEP_CHOICES, default=None, verbose_name="Horas de sueño")
 
     # Tests and measurements
     biotype = models.CharField(max_length=100, null=True, blank=True, verbose_name="Biotipo")
-    shoulder_flexibility = models.CharField(null=True, blank=True, verbose_name="Flexibilidad de hombros")
+    shoulder_flexibility = models.CharField(null=True, blank=True, choices=FLEXIBILITY_CHOICES, default=None, verbose_name="Flexibilidad de hombros")
     hip_flexibility = models.CharField(null=True, blank=True, choices=FLEXIBILITY_CHOICES, default=None, verbose_name="Flexibilidad de cadera")
     knee_flexibility = models.CharField(null=True, blank=True, choices=FLEXIBILITY_CHOICES, default=None, verbose_name="Flexibilidad de rodilla")
     ankle_flexibility = models.CharField(null=True, blank=True, choices=FLEXIBILITY_CHOICES, default=None, verbose_name="Flexibilidad de tobillo")
