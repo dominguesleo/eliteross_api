@@ -23,3 +23,5 @@ def calculate_body_measurement(sender, instance, **kwargs):
     instance.ymca = ymca(instance.client.gender, instance.weight, instance.waist_circ)
     instance.deurenberg = deurenberg(instance.client.gender, instance.client.age, instance.weight, instance.client.height)
 
+    print(instance.client.height)
+

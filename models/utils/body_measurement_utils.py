@@ -153,7 +153,6 @@ def navy_body_fat(gender=None, height=None, waist_circ=None, neck_circ=None, hip
         neck_circ = cm_to_inches(neck_circ)
         hip_circ = cm_to_inches(hip_circ)
         return 163.205 * math.log10(waist_circ + hip_circ - neck_circ) - 97.684 * math.log10(height) - 78.387
-
     return None
 
 def ymca(gender=None, weight=None, waist_circ=None):

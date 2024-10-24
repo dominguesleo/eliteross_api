@@ -53,6 +53,9 @@ class BodyMeasurement(models.Model):
     ymca = models.FloatField(null=True, blank=True, default=None, verbose_name="YMCA")
     deurenberg = models.FloatField(null=True, blank=True, default=None, verbose_name="Deurenberg")
 
+    def __str__(self):
+        return f"{self.client.name} {self.client.last_name} - {self.date}"
+
     class Meta:
         verbose_name = "Medición Corporal"
         verbose_name_plural = "Mediciones Corporales"
