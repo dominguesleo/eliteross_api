@@ -1,7 +1,7 @@
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
-from models.models.body_measurement_models import BodyMeasurement
-from models.utils.body_measurement_utils import *
+from .models import BodyMeasurement
+from .utils import *
 
 @receiver(pre_save, sender=BodyMeasurement)
 def calculate_body_measurement(sender, instance, **kwargs):
@@ -24,4 +24,3 @@ def calculate_body_measurement(sender, instance, **kwargs):
     instance.deurenberg = deurenberg(instance.client.gender, instance.client.age, instance.weight, instance.client.height)
 
     print(instance.client.height)
-

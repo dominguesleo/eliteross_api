@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.postgres',
     'rest_framework',
-    'models'
+    'user',
+    'body_measurement'
 ]
 
 MIDDLEWARE = [

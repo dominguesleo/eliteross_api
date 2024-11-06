@@ -1,7 +1,5 @@
 import math
 
-#TODO: Preguntar si se guarda la densidad corporal o el porcentaje de 
-
 def cm_to_inches(cm):
     return cm / 2.54
 
@@ -168,4 +166,3 @@ def deurenberg(gender=None, age=None, weight=None, height=None):
     if gender == "Male" or gender == "Female":
         return (1.2 * imc(weight, height)) + (0.23 * age) - (10.8 * 1 if gender == "Male" else 0) - 5.4
     return None
-

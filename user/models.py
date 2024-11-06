@@ -3,16 +3,16 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from datetime import date
 
 GENDER_CHOICES = [
-    ('Female', 'Female'),
-    ('Male', 'Male'),
+    ('Female', 'Femenino'),
+    ('Male', 'Masculino'),
 ]
 
 PHYSICAL_ACTIVITY_CHOICES = [
-    ('Sedentary', 'Sedentary'),
-    ('Lightly Sedentary', 'Lightly Sedentary'),
-    ('Light', 'Light'),
-    ('Moderate', 'Moderate'),
-    ('Intense', 'Intense'),
+    ('Sedentary', 'Sedentario'),
+    ('Lightly Sedentary', 'Ligeramente sedentario'),
+    ('Light', 'Ligero'),
+    ('Moderate', 'Moderado'),
+    ('Intense', 'Intenso'),
 ]
 
 CIGARETTE_CHOICES = [
@@ -21,32 +21,27 @@ CIGARETTE_CHOICES = [
     ('+20', '+20'),
 ]
 
-DIABETIC_CHOICES = [
-    ('Type 1', 'Type 1'),
-    ('Type 2', 'Type 2'),
-]
-
 SLEEP_CHOICES = [
-    ('-6 hours', '-6 hours'),
-    ('6-7 hours', '6-7 hours'),
-    ('8 hours', '8 hours'),
-    ('+9 hours', '+9 hours'),
+    ('-6 hours', '-6 horas'),
+    ('6-7 hours', '6-7 horas'),
+    ('8 hours', '8 horas'),
+    ('+9 hours', '+9 horas'),
 ]
 
 MEALS_CHOICES = [
-    ('Breakfast', 'Breakfast'),
-    ('Mid-morning snack', 'Mid-morning snack'),
-    ('Lunch', 'Lunch'),
-    ('Mid-Afternoon snack', 'Mid-Afternoon snack'),
-    ('Dinner', 'Dinner'),
-    ('Evening snack', 'Evening snack'),
-    ('Others', 'Others'),
+    ('Breakfast', 'Desayuno'),
+    ('Mid-morning snack', 'Merienda de media mañana'),
+    ('Lunch', 'Almuerzo'),
+    ('Mid-Afternoon snack', 'Merienda de la tarde'),
+    ('Dinner', 'Cena'),
+    ('Evening snack', 'Merienda nocturna'),
+    ('Others', 'Otros'),
 ]
 
 FLEXIBILITY_CHOICES = [
-    ('Good', 'Good'),
+    ('Good', 'Buena'),
     ('Regular', 'Regular'),
-    ('Bad', 'Bad'),
+    ('Bad', 'Mala'),
 ]
 
 class Client(models.Model):

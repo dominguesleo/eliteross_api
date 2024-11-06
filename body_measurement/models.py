@@ -1,5 +1,5 @@
 from django.db import models
-from models.models.user_models import Client
+from user.models import Client
 
 class BodyMeasurement(models.Model):
 
