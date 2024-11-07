@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'rest_framework',
     'user',
-    'body_measurement'
+    'body_measurement',
+    'exercise',
+    'training_plan',
 ]
 
 MIDDLEWARE = [
