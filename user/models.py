@@ -50,26 +50,26 @@ class Client(models.Model):
     name = models.CharField(max_length=100, verbose_name="Nombre")
     last_name = models.CharField(max_length=100, verbose_name="Apellidos")
     date_of_birth = models.DateField(verbose_name="Fecha de nacimiento")
-    phone = models.CharField(max_length=20, null=True, blank=True, verbose_name="Teléfono")
-    email = models.EmailField(null=True, blank=True, verbose_name="Correo electrónico")
+    phone = models.CharField(max_length=20, null=True, blank=True, default=None, verbose_name="Teléfono")
+    email = models.EmailField(null=True, blank=True, default=None, verbose_name="Correo electrónico")
     gender = models.CharField(max_length=20, choices=GENDER_CHOICES, verbose_name="Género")
-    height = models.FloatField(null=True, blank=True, verbose_name="Altura")
-    address = models.CharField(max_length=200, null=True, blank=True, verbose_name="Dirección")
-    profession = models.CharField(max_length=100, null=True, blank=True, verbose_name="Profesión")
-    physical_activity_at_work = models.CharField(max_length=100, null=True, blank=True, choices=PHYSICAL_ACTIVITY_CHOICES, default=None, verbose_name="Actividad física en el trabajo")
-    fitness_goal = models.CharField(max_length=100, null=True, blank=True, verbose_name="Objetivo de fitness")
+    height = models.FloatField(null=True, blank=True, default=None, verbose_name="Altura")
+    address = models.CharField(max_length=200, null=True, blank=True, default=None, verbose_name="Dirección")
+    profession = models.CharField(max_length=100, null=True, blank=True, default=None, verbose_name="Profesión")
+    physical_activity_at_work = models.CharField(max_length=100, null=True, blank=True, default=None, choices=PHYSICAL_ACTIVITY_CHOICES, verbose_name="Actividad física en el trabajo")
+    fitness_goal = models.CharField(max_length=100, null=True, blank=True, default=None, verbose_name="Objetivo de fitness")
 
     # Health Information
     is_smoker = models.BooleanField(null=True, default=None, verbose_name="¿Fumador?")
-    cigarette_per_day = models.CharField(max_length=100, null=True, blank=True, choices=CIGARETTE_CHOICES, default=None, verbose_name="Cigarrillos por día")
-    cholesterol = models.FloatField(null=True, blank=True, verbose_name="Colesterol")
-    blood_pressure = models.FloatField(null=True, blank=True, verbose_name="Presión arterial")
-    heart_rate = models.FloatField(null=True, blank=True, verbose_name="Frecuencia cardíaca")
+    cigarette_per_day = models.CharField(max_length=100, null=True, blank=True, default=None, choices=CIGARETTE_CHOICES, verbose_name="Cigarrillos por día")
+    cholesterol = models.FloatField(null=True, blank=True, default=None, verbose_name="Colesterol")
+    blood_pressure = models.FloatField(null=True, blank=True, default=None, verbose_name="Presión arterial")
+    heart_rate = models.FloatField(null=True, blank=True, default=None, verbose_name="Frecuencia cardíaca")
 
     # Sports, rest, and nutrition
     is_physically_active = models.BooleanField(null=True, default=None, verbose_name="¿Activo físicamente?")
-    physical_inactivity_per_month = models.IntegerField(validators=[MinValueValidator(0)], null=True, blank=True, verbose_name="Inactividad física por mes")
-    days_available_for_training = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(7)], null=True, blank=True, verbose_name="Días disponibles para entrenar")
+    physical_inactivity_per_month = models.IntegerField(validators=[MinValueValidator(0)], null=True, blank=True, default=None, verbose_name="Inactividad física por mes")
+    days_available_for_training = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(7)], null=True, blank=True, default=None, verbose_name="Días disponibles para entrenar")
     hours_of_sleep = models.CharField(max_length=100, null=True, blank=True, choices=SLEEP_CHOICES, default=None, verbose_name="Horas de sueño")
 
     # Tests and measurements
@@ -104,7 +104,7 @@ class Client(models.Model):
 class AlteredAnalyticalData(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='altered_analytical_data', verbose_name="Cliente")
     name = models.CharField(max_length=100, verbose_name="Nombre")
-    details = models.TextField(null=True, blank=True, verbose_name="Detalles")
+    details = models.TextField(null=True, blank=True, default=None, verbose_name="Detalles")
 
     def __str__(self):
         return f"{self.client.name} {self.client.last_name} - {self.name}"
@@ -116,7 +116,7 @@ class AlteredAnalyticalData(models.Model):
 class Disease(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='disease', verbose_name="Cliente")
     name = models.CharField(max_length=100, verbose_name="Nombre")
-    details = models.TextField(null=True, blank=True, verbose_name="Detalles")
+    details = models.TextField(null=True, blank=True, default=None, verbose_name="Detalles")
 
     def __str__(self):
         return f"{self.client.name} {self.client.last_name} - {self.name}"
@@ -128,7 +128,7 @@ class Disease(models.Model):
 class Surgery(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='surgery', verbose_name="Cliente")
     name = models.CharField(max_length=100, verbose_name="Nombre")
-    details = models.TextField(null=True, blank=True, verbose_name="Detalles")
+    details = models.TextField(null=True, blank=True, default=None, verbose_name="Detalles")
 
     def __str__(self):
         return f"{self.client.name} {self.client.last_name} - {self.name}"
@@ -140,7 +140,7 @@ class Surgery(models.Model):
 class Injury(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='injury', verbose_name="Cliente")
     name = models.CharField(max_length=100, verbose_name="Nombre")
-    details = models.TextField(null=True, blank=True, verbose_name="Detalles")
+    details = models.TextField(null=True, blank=True, default=None, verbose_name="Detalles")
 
     def __str__(self):
         return f"{self.client.name} {self.client.last_name} - {self.name}"
@@ -152,7 +152,7 @@ class Injury(models.Model):
 class ContraindicatedPhysicalActivity(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='contraindicated_physical_activity', verbose_name="Cliente")
     name = models.CharField(max_length=100, verbose_name="Nombre")
-    details = models.TextField(null=True, blank=True, verbose_name="Detalles")
+    details = models.TextField(null=True, blank=True, default=None, verbose_name="Detalles")
 
     def __str__(self):
         return f"{self.client.name} {self.client.last_name} - {self.name}"
@@ -167,9 +167,9 @@ class ContraindicatedPhysicalActivity(models.Model):
 class PhysicalActivity(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='physical_activity', verbose_name="Cliente")
     name = models.CharField(max_length=100, verbose_name="Nombre")
-    per_week = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(7)], null=True, blank=True, verbose_name="Por semana")
+    per_week = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(7)], null=True, blank=True, default=None,  verbose_name="Por semana")
     level = models.CharField(max_length=100, null=True, blank=True, choices=PHYSICAL_ACTIVITY_CHOICES, default=None, verbose_name="Nivel")
-    details = models.TextField(null=True, blank=True, verbose_name="Detalles")
+    details = models.TextField(null=True, blank=True, default=None, verbose_name="Detalles")
 
     def __str__(self):
         return f"{self.client.name} {self.client.last_name} - {self.name}"
@@ -181,7 +181,7 @@ class PhysicalActivity(models.Model):
 class DailyMeals(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='daily_meals', verbose_name="Cliente")
     name = models.CharField(max_length=100, verbose_name="Nombre")
-    details = models.TextField(null=True, blank=True, verbose_name="Detalles")
+    details = models.TextField(null=True, blank=True, default=None, verbose_name="Detalles")
 
     def __str__(self):
         return f"{self.client.name} {self.client.last_name} - {self.name}"
@@ -193,7 +193,7 @@ class DailyMeals(models.Model):
 class AllergiesIntolerances(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='allergies_intolerances', verbose_name="Cliente")
     name = models.CharField(max_length=100, verbose_name="Nombre")
-    details = models.TextField(null=True, blank=True, verbose_name="Detalles")
+    details = models.TextField(null=True, blank=True, default=None, verbose_name="Detalles")
 
     def __str__(self):
         return f"{self.client.name} {self.client.last_name} - {self.name}"
@@ -205,7 +205,7 @@ class AllergiesIntolerances(models.Model):
 class Supplements(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='supplements', verbose_name="Cliente")
     name = models.CharField(max_length=100, verbose_name="Nombre")
-    details = models.TextField(null=True, blank=True, verbose_name="Detalles")
+    details = models.TextField(null=True, blank=True, default=None, verbose_name="Detalles")
 
     def __str__(self):
         return f"{self.client.name} {self.client.last_name} - {self.name}"
