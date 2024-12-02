@@ -2,6 +2,7 @@ from django.urls import reverse
 from django.utils.html import format_html
 from django.contrib import admin
 from .models import *
+from body_measurement.models import BodyMeasurement
 
 #* inlines
 
@@ -45,7 +46,7 @@ class SupplementsInline(admin.TabularInline):
 
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):
-    list_display = ('name', 'last_name', 'date_of_birth', 'phone', 'email', 'gender', 'fitness_goal', 'view_body_measurements_link')
+    list_display = ('name', 'last_name', 'date_of_birth', 'phone', 'email', 'gender', 'fitness_goal') # 'view_body_measurements_link'
     list_filter = ('gender', 'is_smoker', 'cigarette_per_day', 'physical_activity_at_work', 'is_physically_active', 'hours_of_sleep', 'is_active')
     search_fields = ('name', 'last_name', 'date_of_birth', 'phone', 'email', 'address', 'profession', 'fitness_goal')
     ordering = ('name', 'last_name', 'date_of_birth', 'phone', 'email', 'gender', 'profession', 'fitness_goal')
@@ -66,10 +67,11 @@ class ClientAdmin(admin.ModelAdmin):
     )
     inlines = [AlteredAnalyticalDataInline, DiseaseInline, SurgeryInline, InjuryInline, ContraindicatedPhysicalActivityInline, PhysicalActivityInline, DailyMealsInline, AllergiesIntolerancesInline, SupplementsInline]
 
-    @admin.display(description='Medidas Corporales')
+    # TODO: Configurar link medidas corporales
+    """@admin.display(description='Medidas Corporales')
     def view_body_measurements_link(self, obj):
         url = reverse('admin:models_bodymeasurement_changelist') + f'?client__id__exact={obj.id}'
-        return format_html('<a href="{}">Medidas Corporales</a>', url)
+        return format_html('<a href="{}">Medidas Corporales</a>', url)"""
 
 @admin.register(AlteredAnalyticalData)
 class AlteredAnalyticalDataAdmin(admin.ModelAdmin):

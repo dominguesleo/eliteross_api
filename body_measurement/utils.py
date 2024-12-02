@@ -66,7 +66,6 @@ def pollock_7(gender=None, age=None, chest_skf=None, mid_axillary_skf=None, subs
         return 1.097 - (0.00046971 * sum_skf) + (0.00000056 * (sum_skf)**2 - (0.00012828 * age))
     return None
 
-#TODO: Hablar con Gaby, cambia mucho respecto a excel
 def petroski(gender=None, age=None, triceps_skf=None, subscapular_skf=None, suprailiac_skf=None, calf_skf=None):
     if not gender or not age:
         return None
